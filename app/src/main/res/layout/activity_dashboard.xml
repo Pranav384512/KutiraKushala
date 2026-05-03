@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F5F0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome Entrepreneur 👋"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#6A1B9A"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnAddProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="➕ Add Product"
+            android:textSize="18sp"
+            android:backgroundTint="#7B1FA2"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnCapacity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📦 Capacity Meter"
+            android:textSize="18sp"
+            android:backgroundTint="#8E24AA"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnViewProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🛒 View My Products"
+            android:textSize="18sp"
+            android:backgroundTint="#9C27B0"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnViewBusinesses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🏪 Browse All Businesses"
+            android:textSize="18sp"
+            android:backgroundTint="#1565C0"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🚪 Logout"
+            android:textSize="18sp"
+            android:backgroundTint="#AD1457"/>
+        <Button
+            android:id="@+id/btnMyProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="👤 My Business Profile"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#4A148C"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+</ScrollView>

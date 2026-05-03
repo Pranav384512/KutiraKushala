@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF8F0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🏺 Business Details"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="#6A1B9A"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvDetailName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#6A1B9A"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvDetailSkill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvDetailLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#777777"
+            android:textSize="15sp"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvDetailCapacity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#2E7D32"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:paddingBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnCallNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📞 Call for Bulk Order"
+            android:textSize="18sp"
+            android:backgroundTint="#E65100"/>
+
+    </LinearLayout>
+</ScrollView>

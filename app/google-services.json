@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "956952106152",
+    "project_id": "kutirakushala-c2224",
+    "storage_bucket": "kutirakushala-c2224.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956952106152:android:c7b8d290e8baea5813de9d",
+        "android_client_info": {
+          "package_name": "com.example.kutirakushala"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuYI0Y8gRVLKLYqjkCkP4gTgZi4smQvpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956952106152:android:df993f20bf20065313de9d",
+        "android_client_info": {
+          "package_name": "com.kutira.kushala"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuYI0Y8gRVLKLYqjkCkP4gTgZi4smQvpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
