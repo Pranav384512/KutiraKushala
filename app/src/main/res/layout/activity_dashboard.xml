@@ -27,6 +27,14 @@
             android:textSize="18sp"
             android:backgroundTint="#7B1FA2"
             android:layout_marginBottom="16dp"/>
+        <Button
+            android:id="@+id/btnMyProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="👤 My Business Profile"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#4A148C"
+            android:textColor="#FFFFFF"/>
 
         <Button
             android:id="@+id/btnCapacity"
@@ -62,14 +70,7 @@
             android:text="🚪 Logout"
             android:textSize="18sp"
             android:backgroundTint="#AD1457"/>
-        <Button
-            android:id="@+id/btnMyProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="👤 My Business Profile"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="#4A148C"
-            android:textColor="#FFFFFF"/>
+
 
     </LinearLayout>
 </ScrollView>
