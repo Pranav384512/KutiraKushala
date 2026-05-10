@@ -1,67 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF8F0">
+    android:background="@color/background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="vertical">
 
-        <TextView
+        <!-- Header Photo -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+            <ImageView
+                android:id="@+id/ivBusinessHeader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_gallery"
+                android:background="#E0E0E0"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#44000000"/>
+            <TextView
+                android:id="@+id/tvDetailBusinessName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="20dp"
+                android:text="Business Name"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold"/>
+        </FrameLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🏺 Business Details"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:background="#6A1B9A"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp"/>
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <TextView
-            android:id="@+id/tvDetailName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#6A1B9A"
-            android:paddingBottom="8dp"/>
+            <!-- Category & Location -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
 
-        <TextView
-            android:id="@+id/tvDetailSkill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:paddingBottom="4dp"/>
+                <TextView
+                    android:id="@+id/tvDetailCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/category_badge_bg"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:text="Category"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/tvDetailLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#777777"
-            android:textSize="15sp"
-            android:paddingBottom="8dp"/>
+                <TextView
+                    android:id="@+id/tvDetailLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="📍 Location"
+                    android:textColor="@color/textSecondary"/>
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvDetailCapacity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#2E7D32"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:paddingBottom="24dp"/>
+            <!-- Skill Area & Capacity Status -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="24dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-        <Button
-            android:id="@+id/btnCallNow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="📞 Call for Bulk Order"
-            android:textSize="18sp"
-            android:backgroundTint="#E65100"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Micro-Factory Status"
+                        android:textSize="12sp"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:textColor="@color/textSecondary"
+                        android:layout_marginBottom="12dp"/>
 
+                    <TextView
+                        android:id="@+id/tvDetailSkill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Skill: Handloom Weaving"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/textPrimary"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/tvDetailCapacityStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✅ Ready for 200 units this week"
+                        android:textSize="14sp"
+                        android:textColor="@color/accent_green" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/textPrimary"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tvDetailOwner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="14sp"
+                android:textColor="@color/textSecondary"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Direct Connect Action -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCallEntrepreneur"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="📞 Call Entrepreneur"
+                app:cornerRadius="12dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/accent_green"
+                android:layout_marginBottom="12dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewCatalog"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="🛒 View Full Catalog"
+                app:cornerRadius="12dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"/>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

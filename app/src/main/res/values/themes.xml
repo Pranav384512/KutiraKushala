@@ -2,7 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.KutiraKushala" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/colorPrimaryVariant</item>
     </style>
 
     <style name="Theme.KutiraKushala" parent="Base.Theme.KutiraKushala" />

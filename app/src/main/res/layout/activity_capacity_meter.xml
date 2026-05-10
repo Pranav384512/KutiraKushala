@@ -1,34 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:background="#F9F5F0">
+    android:background="@color/background"
+    android:padding="20dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Capacity Meter"
-        android:textSize="28sp"
+        android:text="Production Capacity"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="#6A1B9A"
-        android:layout_marginBottom="30dp"/>
+        android:textColor="@color/colorPrimary"
+        android:layout_marginBottom="8dp"/>
 
-    <EditText
-        android:id="@+id/etWeeklyCapacity"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Ready to take orders for ___ units this week"
-        android:inputType="number"
+        android:text="Keep this updated so bulk buyers know you are ready for orders."
+        android:textSize="14sp"
+        android:textColor="@color/textSecondary"
         android:layout_marginBottom="24dp"/>
 
-    <Button
-        android:id="@+id/btnSaveCapacity"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Capacity"
-        android:textSize="18sp"
-        android:backgroundTint="#7B1FA2"/>
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        android:layout_marginBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weekly Units"
+                android:textSize="14sp"
+                android:textAllCaps="true"
+                android:textColor="@color/textSecondary"/>
+
+            <EditText
+                android:id="@+id/etWeeklyCapacity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="000"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:inputType="number"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:minWidth="120dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"
+                android:layout_marginVertical="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Ready for bulk orders"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/textPrimary"/>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchReady"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSaveCapacity"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Update Live Capacity"
+        app:cornerRadius="12dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/colorPrimary"/>
 
 </LinearLayout>

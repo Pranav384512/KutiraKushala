@@ -14,6 +14,7 @@ class ProductAdapter(
         val tvProductName: TextView = view.findViewById(R.id.tvProductName)
         val tvPrice: TextView = view.findViewById(R.id.tvPrice)
         val tvCapacityProduct: TextView = view.findViewById(R.id.tvCapacityProduct)
+        val tvCategory: TextView = view.findViewById(R.id.tvCategory)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,9 +25,11 @@ class ProductAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val p = list[position]
-        holder.tvProductName.text = p["productName"] ?: ""
-        holder.tvPrice.text = "💰 Wholesale Price: ₹${p["wholesalePrice"]}"
-        holder.tvCapacityProduct.text = "📦 Daily Capacity: ${p["dailyCapacity"]} units"
+
+        holder.tvProductName.text = p["productName"] ?: "Unknown Product"
+        holder.tvPrice.text = "₹${p["wholesalePrice"] ?: "0"}"
+        holder.tvCapacityProduct.text = "${p["dailyCapacity"] ?: "0"} units"
+        holder.tvCategory.text = p["category"] ?: "General"
     }
 
     override fun getItemCount() = list.size

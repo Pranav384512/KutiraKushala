@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9F5F0">
+    android:background="@color/background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,43 +14,105 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Product Details"
+            android:text="Add New Product"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="#6A1B9A"
+            android:textColor="@color/colorPrimary"
             android:layout_marginBottom="24dp"/>
 
-        <EditText
-            android:id="@+id/etProductName"
+        <!-- Product Image Selection -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardProductPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="24dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#F5F5F5">
+                <ImageView
+                    android:id="@+id/ivProductPhoto"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@android:drawable/ic_menu_camera"
+                    app:tint="@color/textSecondary"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tap to Add Product Photo"
+                    android:textColor="@color/textSecondary"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Product Name"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etWholesalePrice"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Wholesale Price"
-            android:inputType="number"
-            android:layout_marginBottom="16dp"/>
+            android:hint="Wholesale Price (₹)"
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etWholesalePrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etDailyCapacity"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Daily Capacity"
-            android:inputType="number"
-            android:layout_marginBottom="24dp"/>
+            android:hint="Daily Capacity (units)"
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDailyCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Category"
+            android:textSize="12sp"
+            android:textColor="@color/textSecondary"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"/>
+
+        <Spinner
+            android:id="@+id/spCategory"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/spinner_border"
+            android:padding="12dp"
+            android:layout_marginBottom="32dp"/>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveProduct"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save Product"
-            android:textSize="18sp"
-            android:backgroundTint="#7B1FA2"/>
+            android:layout_height="60dp"
+            android:text="List Product in Catalog"
+            app:cornerRadius="12dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/colorPrimary"/>
 
     </LinearLayout>
-
 </ScrollView>

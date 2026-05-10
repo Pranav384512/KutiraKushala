@@ -1,51 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="10dp"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="16dp"
     app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:padding="16dp"
+        android:background="@color/surface">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="top">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvBusinessName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Business Name"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvOwnerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Owner: Name"
+                    android:textSize="14sp"
+                    android:textColor="@color/textSecondary" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvStatusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="READY"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/category_badge_bg"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0F0F0"
+            android:layout_marginVertical="12dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvCategoryBusiness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textSize="12sp"
+                android:textColor="@color/colorSecondary"
+                android:textStyle="bold"
+                android:background="#E3F2FD"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp"/>
+
+            <TextView
+                android:id="@+id/tvVillage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📍 Location"
+                android:textSize="13sp"
+                android:textColor="@color/textSecondary" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tvBusinessName"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvPhone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
+            android:text="📞 Call Entrepreneur"
+            android:textSize="14sp"
+            android:textColor="@color/accent_green"
             android:textStyle="bold"
-            android:textColor="#6A1B9A"/>
-
-        <TextView
-            android:id="@+id/tvSkill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#777777"
-            android:textSize="13sp"
-            android:paddingTop="4dp"/>
-
-        <TextView
-            android:id="@+id/tvLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#999999"
-            android:textSize="12sp"
-            android:paddingTop="2dp"/>
-
-        <TextView
-            android:id="@+id/tvCapacity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#2E7D32"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:paddingTop="4dp"/>
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="#E8F5E9"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

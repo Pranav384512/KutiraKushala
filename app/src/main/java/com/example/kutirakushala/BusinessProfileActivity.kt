@@ -1,24 +1,41 @@
 package com.example.kutirakushala
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 class BusinessProfileActivity : AppCompatActivity() {
 
-    lateinit var etOwnerName: EditText
-    lateinit var etBusinessName: EditText
-    lateinit var etSkillArea: EditText
-    lateinit var etLocation: EditText
-    lateinit var etPhone: EditText
-    lateinit var spinnerCategory: Spinner
-    lateinit var btnSaveProfile: Button
-    lateinit var tvProfileStatus: TextView
-    lateinit var db: FirebaseFirestore
-    lateinit var auth: FirebaseAuth
+    private lateinit var etOwnerName: EditText
+    private lateinit var etBusinessName: EditText
+    private lateinit var etSkillArea: EditText
+    private lateinit var etLocation: EditText
+    private lateinit var etPhone: EditText
+    private lateinit var spinnerCategory: Spinner
+    private lateinit var btnSaveProfile: Button
+    private lateinit var tvProfileStatus: TextView
+    private lateinit var ivProfilePhoto: ImageView
+    private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+
+    private var selectedImageUri: Uri? = null
+
+    // Photo Selection Launcher (Requirement: Business Profile Photo)
+    private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            selectedImageUri = result.data?.data
+            ivProfilePhoto.setImageURI(selectedImageUri)
+            ivProfilePhoto.setPadding(0, 0, 0, 0) // Remove camera icon padding
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +52,18 @@ class BusinessProfileActivity : AppCompatActivity() {
         spinnerCategory = findViewById(R.id.spinnerCategory)
         btnSaveProfile = findViewById(R.id.btnSaveProfile)
         tvProfileStatus = findViewById(R.id.tvProfileStatus)
+        ivProfilePhoto = findViewById(R.id.ivProfilePhoto)
 
-        // Setup category spinner
+        findViewById<View>(R.id.cardProfilePhoto).setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK).apply { type = "image/*" }
+            imagePickerLauncher.launch(intent)
+        }
+
         val categories = listOf("Food", "Craft", "Textile", "Other")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategory.adapter = adapter
 
-        // Load existing profile if it exists
         loadExistingProfile()
 
         btnSaveProfile.setOnClickListener {
@@ -52,78 +73,38 @@ class BusinessProfileActivity : AppCompatActivity() {
 
     private fun loadExistingProfile() {
         val uid = auth.currentUser?.uid ?: return
-
-        db.collection("businesses").document(uid)
-            .get()
-            .addOnSuccessListener { doc ->
-                if (doc.exists()) {
-                    etOwnerName.setText(doc.getString("ownerName") ?: "")
-                    etBusinessName.setText(doc.getString("businessName") ?: "")
-                    etSkillArea.setText(doc.getString("skillArea") ?: "")
-                    etLocation.setText(doc.getString("location") ?: "")
-                    etPhone.setText(doc.getString("phone") ?: "")
-
-                    // Set spinner to saved category
-                    val savedCategory = doc.getString("category") ?: "Food"
-                    val categories = listOf("Food", "Craft", "Textile", "Other")
-                    val index = categories.indexOf(savedCategory)
-                    if (index >= 0) spinnerCategory.setSelection(index)
-
-                    tvProfileStatus.text = "✅ Profile loaded"
-                }
+        db.collection("businesses").document(uid).get().addOnSuccessListener { doc ->
+            if (doc.exists()) {
+                etOwnerName.setText(doc.getString("ownerName") ?: "")
+                etBusinessName.setText(doc.getString("businessName") ?: "")
+                etSkillArea.setText(doc.getString("skillArea") ?: "")
+                etLocation.setText(doc.getString("location") ?: "")
+                etPhone.setText(doc.getString("phone") ?: "")
+                
+                val savedCategory = doc.getString("category") ?: "Food"
+                val index = listOf("Food", "Craft", "Textile", "Other").indexOf(savedCategory)
+                if (index >= 0) spinnerCategory.setSelection(index)
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Could not load profile: ${it.message}", Toast.LENGTH_SHORT).show()
-            }
+        }
     }
 
     private fun saveProfile() {
-        val ownerName = etOwnerName.text.toString().trim()
-        val businessName = etBusinessName.text.toString().trim()
-        val skillArea = etSkillArea.text.toString().trim()
-        val location = etLocation.text.toString().trim()
-        val phone = etPhone.text.toString().trim()
-        val category = spinnerCategory.selectedItem.toString()
-
-        if (ownerName.isEmpty() || businessName.isEmpty() || skillArea.isEmpty()
-            || location.isEmpty() || phone.isEmpty()) {
-            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val uid = auth.currentUser?.uid
-        if (uid == null) {
-            Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        btnSaveProfile.isEnabled = false
-        tvProfileStatus.text = "Saving..."
-
+        val uid = auth.currentUser?.uid ?: return
         val profileMap = hashMapOf(
-            "ownerName" to ownerName,
-            "businessName" to businessName,
-            "skillArea" to skillArea,
-            "location" to location,
-            "phone" to phone,
-            "category" to category,
-            "capacityReady" to false,
-            "capacityNote" to "",
+            "ownerName" to etOwnerName.text.toString(),
+            "businessName" to etBusinessName.text.toString(),
+            "skillArea" to etSkillArea.text.toString(),
+            "location" to etLocation.text.toString(),
+            "phone" to etPhone.text.toString(),
+            "category" to spinnerCategory.selectedItem.toString(),
             "userId" to uid
         )
 
-        // Use UID as document ID so each user has one profile
-        db.collection("businesses").document(uid)
-            .set(profileMap)
+        tvProfileStatus.text = "Updating profile..."
+        db.collection("businesses").document(uid).set(profileMap, SetOptions.merge())
             .addOnSuccessListener {
-                btnSaveProfile.isEnabled = true
-                tvProfileStatus.text = "✅ Profile saved successfully!"
-                Toast.makeText(this, "Profile Saved!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                btnSaveProfile.isEnabled = true
-                tvProfileStatus.text = "❌ Failed to save"
-                Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Profile and Team Photo linked!", Toast.LENGTH_SHORT).show()
+                finish()
             }
     }
 }

@@ -2,18 +2,15 @@ package com.example.kutirakushala
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.google.firebase.auth.FirebaseAuth
 
 class DashboardActivity : AppCompatActivity() {
 
-    lateinit var btnAddProduct: Button
-    lateinit var btnCapacity: Button
-    lateinit var btnViewProducts: Button
-    lateinit var btnViewBusinesses: Button
-    lateinit var btnLogout: Button
-    lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,33 +18,35 @@ class DashboardActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        btnAddProduct = findViewById(R.id.btnAddProduct)
-        btnCapacity = findViewById(R.id.btnCapacity)
-        btnViewProducts = findViewById(R.id.btnViewProducts)
-        btnViewBusinesses = findViewById(R.id.btnViewBusinesses)
-        btnLogout = findViewById(R.id.btnLogout)
+        // CardViews for Navigation
+        val cardAddProduct = findViewById<CardView>(R.id.cardAddProduct)
+        val cardCapacity = findViewById<CardView>(R.id.cardCapacity)
+        val cardViewProducts = findViewById<CardView>(R.id.cardViewProducts)
+        val cardBrowseBusinesses = findViewById<CardView>(R.id.cardBrowseBusinesses)
+        val cardMyProfile = findViewById<CardView>(R.id.cardMyProfile)
+        val ivLogout = findViewById<ImageView>(R.id.ivLogout)
 
-        btnAddProduct.setOnClickListener {
+        cardAddProduct.setOnClickListener {
             startActivity(Intent(this, AddProductActivity::class.java))
         }
 
-        btnCapacity.setOnClickListener {
+        cardCapacity.setOnClickListener {
             startActivity(Intent(this, CapacityMeterActivity::class.java))
         }
 
-        btnViewProducts.setOnClickListener {
+        cardViewProducts.setOnClickListener {
             startActivity(Intent(this, ViewProductsActivity::class.java))
         }
 
-        btnViewBusinesses.setOnClickListener {
+        cardBrowseBusinesses.setOnClickListener {
             startActivity(Intent(this, BusinessListActivity::class.java))
         }
-        val btnMyProfile = findViewById<Button>(R.id.btnMyProfile)
-        btnMyProfile.setOnClickListener {
+
+        cardMyProfile.setOnClickListener {
             startActivity(Intent(this, BusinessProfileActivity::class.java))
         }
 
-        btnLogout.setOnClickListener {
+        ivLogout.setOnClickListener {
             auth.signOut()
             startActivity(Intent(this, MainActivity::class.java))
             finish()
