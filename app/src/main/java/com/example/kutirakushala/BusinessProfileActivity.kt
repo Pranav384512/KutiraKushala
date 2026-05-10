@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 
 class BusinessProfileActivity : AppCompatActivity() {
 
@@ -25,15 +27,15 @@ class BusinessProfileActivity : AppCompatActivity() {
     private lateinit var ivProfilePhoto: ImageView
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
 
     private var selectedImageUri: Uri? = null
 
-    // Photo Selection Launcher (Requirement: Business Profile Photo)
     private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             selectedImageUri = result.data?.data
             ivProfilePhoto.setImageURI(selectedImageUri)
-            ivProfilePhoto.setPadding(0, 0, 0, 0) // Remove camera icon padding
+            ivProfilePhoto.setPadding(0, 0, 0, 0)
         }
     }
 
@@ -43,6 +45,7 @@ class BusinessProfileActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
+        storage = FirebaseStorage.getInstance()
 
         etOwnerName = findViewById(R.id.etOwnerName)
         etBusinessName = findViewById(R.id.etBusinessName)
@@ -67,7 +70,11 @@ class BusinessProfileActivity : AppCompatActivity() {
         loadExistingProfile()
 
         btnSaveProfile.setOnClickListener {
-            saveProfile()
+            if (selectedImageUri != null) {
+                uploadImageAndSaveProfile()
+            } else {
+                saveProfile("")
+            }
         }
     }
 
@@ -88,9 +95,29 @@ class BusinessProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveProfile() {
+    private fun uploadImageAndSaveProfile() {
         val uid = auth.currentUser?.uid ?: return
-        val profileMap = hashMapOf(
+        val fileName = "profile_$uid.jpg"
+        val ref = storage.reference.child("profiles/$fileName")
+
+        btnSaveProfile.isEnabled = false
+        tvProfileStatus.text = "Uploading image..."
+
+        ref.putFile(selectedImageUri!!)
+            .addOnSuccessListener {
+                ref.downloadUrl.addOnSuccessListener { uri ->
+                    saveProfile(uri.toString())
+                }
+            }
+            .addOnFailureListener {
+                btnSaveProfile.isEnabled = true
+                Toast.makeText(this, "Upload failed: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun saveProfile(imageUrl: String) {
+        val uid = auth.currentUser?.uid ?: return
+        val profileMap = mutableMapOf(
             "ownerName" to etOwnerName.text.toString(),
             "businessName" to etBusinessName.text.toString(),
             "skillArea" to etSkillArea.text.toString(),
@@ -99,12 +126,20 @@ class BusinessProfileActivity : AppCompatActivity() {
             "category" to spinnerCategory.selectedItem.toString(),
             "userId" to uid
         )
+        
+        if (imageUrl.isNotEmpty()) {
+            profileMap["businessImageUrl"] = imageUrl
+        }
 
         tvProfileStatus.text = "Updating profile..."
         db.collection("businesses").document(uid).set(profileMap, SetOptions.merge())
             .addOnSuccessListener {
-                Toast.makeText(this, "Profile and Team Photo linked!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Profile Saved Successfully!", Toast.LENGTH_SHORT).show()
                 finish()
+            }
+            .addOnFailureListener {
+                btnSaveProfile.isEnabled = true
+                Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }

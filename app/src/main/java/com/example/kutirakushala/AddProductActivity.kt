@@ -11,6 +11,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 
 class AddProductActivity : AppCompatActivity() {
 
@@ -22,10 +24,10 @@ class AddProductActivity : AppCompatActivity() {
     private lateinit var ivProductPhoto: ImageView
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
 
     private var selectedImageUri: Uri? = null
 
-    // Photo Selection Launcher (Requirement: Product Catalog with photos)
     private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             selectedImageUri = result.data?.data
@@ -40,6 +42,7 @@ class AddProductActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
+        storage = FirebaseStorage.getInstance()
 
         etProductName = findViewById(R.id.etProductName)
         etWholesalePrice = findViewById(R.id.etWholesalePrice)
@@ -58,11 +61,34 @@ class AddProductActivity : AppCompatActivity() {
         spCategory.adapter = adapter
 
         btnSaveProduct.setOnClickListener {
-            saveProduct()
+            if (selectedImageUri != null) {
+                uploadImageAndSaveProduct()
+            } else {
+                saveProduct("")
+            }
         }
     }
 
-    private fun saveProduct() {
+    private fun uploadImageAndSaveProduct() {
+        val fileName = UUID.randomUUID().toString() + ".jpg"
+        val ref = storage.reference.child("products/$fileName")
+
+        btnSaveProduct.isEnabled = false
+        Toast.makeText(this, "Uploading image...", Toast.LENGTH_SHORT).show()
+
+        ref.putFile(selectedImageUri!!)
+            .addOnSuccessListener {
+                ref.downloadUrl.addOnSuccessListener { uri ->
+                    saveProduct(uri.toString())
+                }
+            }
+            .addOnFailureListener {
+                btnSaveProduct.isEnabled = true
+                Toast.makeText(this, "Upload failed: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun saveProduct(imageUrl: String) {
         val pname = etProductName.text.toString().trim()
         val price = etWholesalePrice.text.toString().trim()
         val capacity = etDailyCapacity.text.toString().trim()
@@ -71,6 +97,7 @@ class AddProductActivity : AppCompatActivity() {
 
         if (pname.isEmpty() || price.isEmpty() || capacity.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            btnSaveProduct.isEnabled = true
             return
         }
 
@@ -80,10 +107,9 @@ class AddProductActivity : AppCompatActivity() {
             "dailyCapacity" to capacity,
             "category" to category,
             "ownerId" to uid,
-            "imageUrl" to (selectedImageUri?.toString() ?: "") // Storing local URI for now
+            "imageUrl" to imageUrl
         )
 
-        btnSaveProduct.isEnabled = false
         db.collection("Products")
             .add(productMap)
             .addOnSuccessListener {
